@@ -1,0 +1,10 @@
+# Intellij IDEA
+/.idea
+*.iml
+
+# project
+/target
+/web/target
+
+# logs
+/logs

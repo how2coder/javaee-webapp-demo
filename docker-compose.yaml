@@ -1,0 +1,39 @@
+networks:
+  default:
+    name: j2ee-network
+
+volumes:
+  j2ee-m2-volume:
+
+services:
+  maven-build:
+    image: maven:3.9.0-eclipse-temurin-17
+    volumes:
+      - .:/usr/src/build
+      - j2ee-m2-volume:/root/.m2
+    working_dir: /usr/src/build
+    command: mvn clean install
+
+  db-mysql:
+    image: mysql:5.7.41
+    environment:
+      MYSQL_DATABASE: j2eedemo
+      MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    networks:
+      default:
+        aliases:
+          - j2eedemo-mysql
+
+  web:
+    container_name: web
+    build:
+      context: web
+      args:
+        version: ${VERSION}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/usr/local/tomcat/logs
