@@ -3,7 +3,7 @@
 To pull all docker images:
 
 ```text
-docker-compose pull
+docker compose pull
 ```
 
 To build project:
@@ -15,7 +15,7 @@ docker compose run maven-build
 To build local docker image:
 
 ```text
-docker-compose build
+docker compose build
 ```
 
 To run database:
@@ -28,3 +28,5 @@ To run web app:
 ```text
 docker compose up -d web
 ```
+
+Go to [http://localhost:8080/demo](http://localhost:8080/demo)

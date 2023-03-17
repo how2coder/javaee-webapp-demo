@@ -4,6 +4,7 @@
 
 # project
 /target
+/model/target
 /web/target
 
 # logs
