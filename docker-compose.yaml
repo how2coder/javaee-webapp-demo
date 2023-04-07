@@ -15,7 +15,7 @@ services:
     command: mvn clean install
 
   db-mysql:
-    image: mysql:5.7.41
+    image: mysql:8.0.32
     environment:
       MYSQL_DATABASE: j2eedemo
       MYSQL_ROOT_PASSWORD: helloworld
@@ -33,6 +33,9 @@ services:
       context: web
       args:
         version: ${VERSION}
+        hikaricp_URL: ${HIKARICP_URL}
+        sfl4j_api_URL: ${SFL4J_API_URL}
+        mysql_connector_j_URL: ${MYSQL_CONNECTOR_J_URL}
     ports:
       - "8080:8080"
     volumes:

@@ -4,7 +4,9 @@
 
 # project
 /target
+/db/target
 /model/target
+/services/target
 /web/target
 
 # logs
