@@ -8,4 +8,8 @@ import java.util.Optional;
 public interface DepartmentService {
 
     Optional<List<Department>> getAllDepartments();
+
+    Optional<Department> getDepartmentById(Long id);
+
+    Optional<Department> getDepartmentById(Long id, boolean includeRelations);
 }

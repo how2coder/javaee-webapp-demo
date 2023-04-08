@@ -11,21 +11,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet(name = "DepartmentServlet", displayName = "DepartmentServlet", urlPatterns = "/departments/*")
-public class DepartmentServlet extends HttpServlet {
+@WebServlet(name = "DepartmentsServlet", displayName = "DepartmentsServlet", urlPatterns = "/departments")
+public class DepartmentsServlet extends HttpServlet {
 
     private final DepartmentService departmentService = DepartmentServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String pathInfo = req.getPathInfo();
-        Long id = Long.parseLong(pathInfo.split("/")[1]);
+        List<Department> departments = departmentService.getAllDepartments()
+                .orElseThrow(() -> new UnavailableException("Unable to read information about departments"));
 
-        Department department = departmentService.getDepartmentById(id)
-                .orElseThrow(() -> new UnavailableException("Unable to read information about department"));
-
-        req.setAttribute("department", department);
-        req.getRequestDispatcher("/department.jsp").forward(req, resp);
+        req.setAttribute("departments", departments);
+        req.getRequestDispatcher("/departments.jsp").forward(req, resp);
     }
 }

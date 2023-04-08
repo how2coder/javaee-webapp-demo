@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -8,7 +9,7 @@
 
 <ul>
     <c:forEach items="${departments}" var="department">
-    <li>${department.name}</li>
+    <li><a href="<c:out value="departments/${department.id}"/>">${department.name}</a></li>
     </c:forEach>
 </ul>
 

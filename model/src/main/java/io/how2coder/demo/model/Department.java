@@ -1,5 +1,6 @@
 package io.how2coder.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
@@ -7,7 +8,7 @@ public class Department {
     private Long id;
     private String name;
     private Manager manager;
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
     public Department() {
     }

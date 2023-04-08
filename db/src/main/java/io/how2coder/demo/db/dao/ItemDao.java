@@ -3,9 +3,9 @@ package io.how2coder.demo.db.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ItemDao<T, Integer> {
+public interface ItemDao<T, K> {
 
-    T get(Integer id) throws SQLException;
+    T get(K id) throws SQLException;
 
     List<T> getAll() throws SQLException;
 

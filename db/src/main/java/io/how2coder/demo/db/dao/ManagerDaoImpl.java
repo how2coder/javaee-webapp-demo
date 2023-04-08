@@ -24,7 +24,7 @@ public class ManagerDaoImpl implements ManagerDao {
     }
 
     @Override
-    public Manager get(Integer id) throws SQLException {
+    public Manager get(Long id) throws SQLException {
         return null;
     }
 
