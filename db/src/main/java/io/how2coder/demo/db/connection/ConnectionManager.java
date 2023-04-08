@@ -1,0 +1,53 @@
+package io.how2coder.demo.db.connection;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class ConnectionManager {
+
+    private static final String DATA_SOURCE_PROP_FILE = "datasource.properties";
+
+    private static volatile DataSource dataSource;
+
+    private ConnectionManager() {
+    }
+
+    public static Connection getConnection() throws SQLException {
+        if (dataSource == null) {
+            synchronized (ConnectionManager.class) {
+                // firstly try to use JNDI resource
+                try {
+                    InitialContext initialContext = new InitialContext();
+                    dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/j2eeDemoDB");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // if JNDI resource not found use properties file from resources, mostly unit tests
+                if (dataSource == null) {
+                    try {
+                        InputStream inputStream = ClassLoader.getSystemResourceAsStream(DATA_SOURCE_PROP_FILE);
+                        Properties properties = new Properties();
+                        properties.load(inputStream);
+
+                        HikariConfig config = new HikariConfig(properties);
+                        dataSource = new HikariDataSource(config);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        if (dataSource == null) {
+            throw new SQLException("Unable to establish connection with database");
+        }
+        return dataSource.getConnection();
+    }
+}
