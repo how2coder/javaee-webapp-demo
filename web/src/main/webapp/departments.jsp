@@ -12,6 +12,11 @@
     <li><a href="<c:out value="departments/${department.id}"/>">${department.name}</a></li>
     </c:forEach>
 </ul>
-
+<c:url value="/departments/create" var="departments_create"/>
+<form action="<c:out value="${departments_create}"/>" method="GET">
+    <div>
+        <button>Create</button>
+    </div>
+</form>
 </body>
 </html>

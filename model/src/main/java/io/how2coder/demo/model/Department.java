@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Department {
 
+    public static final String ID_COLUMN = "id";
+    public static final String NAME_COLUMN = "name";
+
     private Long id;
     private String name;
     private Manager manager;

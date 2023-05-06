@@ -76,8 +76,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee save(Employee obj) throws SQLException {
-        return null;
+    public void save(Employee obj) throws SQLException {
+
     }
 
     @Override

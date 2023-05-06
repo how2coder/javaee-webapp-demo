@@ -61,4 +61,22 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public void saveDepartment(Department department) {
+        try {
+            departmentDao.save(department);
+        } catch (SQLException e) {
+            LOGGER.error(e);
+        }
+    }
+
+    @Override
+    public void updateDepartment(Department department) {
+        try {
+            departmentDao.update(department);
+        } catch (SQLException e) {
+            LOGGER.error(e);
+        }
+    }
 }

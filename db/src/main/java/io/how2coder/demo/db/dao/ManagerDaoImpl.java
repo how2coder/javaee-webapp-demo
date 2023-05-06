@@ -34,8 +34,8 @@ public class ManagerDaoImpl implements ManagerDao {
     }
 
     @Override
-    public Manager save(Manager obj) throws SQLException {
-        return null;
+    public void save(Manager obj) throws SQLException {
+
     }
 
     @Override

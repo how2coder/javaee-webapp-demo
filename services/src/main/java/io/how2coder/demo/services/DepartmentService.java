@@ -12,4 +12,10 @@ public interface DepartmentService {
     Optional<Department> getDepartmentById(Long id);
 
     Optional<Department> getDepartmentById(Long id, boolean includeRelations);
+
+    void saveDepartment(Department department);
+
+    void updateDepartment(Department department);
+//
+//    void deleteDepartment();
 }

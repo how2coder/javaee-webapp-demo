@@ -9,7 +9,7 @@ public interface ItemDao<T, K> {
 
     List<T> getAll() throws SQLException;
 
-    T save(T obj) throws SQLException;
+    void save(T obj) throws SQLException;
 
     void update(T obj) throws SQLException;
 

@@ -15,6 +15,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     private static final String SELECT_ALL = "SELECT id, name FROM department";
     private static final String SELECT_BY_ID = "SELECT id, name FROM department WHERE id = ?";
+    private static final String CREATE = "INSERT INTO department (name) VALUES (?)";
+    private static final String UPDATE = "UPDATE department SET name = ? WHERE id = ?";
 
     private static volatile DepartmentDao instance;
 
@@ -37,11 +39,11 @@ public class DepartmentDaoImpl implements DepartmentDao {
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)){
             preparedStatement.setLong(1, id);
-            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Department department = new Department();
-                    department.setId(resultSet.getLong("id"));
-                    department.setName(resultSet.getString("name"));
+                    department.setId(resultSet.getLong(Department.ID_COLUMN));
+                    department.setName(resultSet.getString(Department.NAME_COLUMN));
                     return department;
                 }
             }
@@ -57,8 +59,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
              ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
             while (resultSet.next()) {
                 Department department = new Department();
-                department.setId(resultSet.getLong("id"));
-                department.setName(resultSet.getString("name"));
+                department.setId(resultSet.getLong(Department.ID_COLUMN));
+                department.setName(resultSet.getString(Department.NAME_COLUMN));
                 result.add(department);
             }
         }
@@ -66,13 +68,22 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public Department save(Department obj) throws SQLException {
-        return null;
+    public void save(Department obj) throws SQLException {
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE)){
+            preparedStatement.setString(1, obj.getName());
+            preparedStatement.execute();
+        }
     }
 
     @Override
     public void update(Department obj) throws SQLException {
-
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)){
+            preparedStatement.setString(1, obj.getName());
+            preparedStatement.setLong(2, obj.getId());
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
